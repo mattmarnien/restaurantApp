@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+​
+<head>
+    <meta charset="UTF-8">
+    <title>Good Eats</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+​
+</head>
+​
+<body>
+​
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Good Eats</h1>
+            <h3>The hottest restaurant in town!</h3>
+            <hr>
+            <!-- <a href="#"><button class="btn btn-danger btn-lg"><span class="fa fa-plus"></span> Add New Reservation</button></a> -->
+            <a href="#"><button id="searchButton" class="btn btn-danger btn-lg"><span class="fa fa-eye"></span>View Table</button></a>
+        </div>
+        <div class="row">
+​
+            <div class="col-12">
+​
+                <div class="card">
+                    <div class="card-header">
+                        <h3><strong>Current Reservations</strong></h3>
+                    </div>
+                    <div class="card-body" id="currentReservations">
+                        
+                    </div>
+                </div>
+​
+                <div class="card">
+                    <div class="card-header">
+                        <h3><strong>Waiting List</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 id="name"></h2>
+                        <div id="waitingList">
+                            <h3><strong>Phone Number:</strong> <span id="role"></span></h3>
+                            <h3><strong>Email:</strong> <span id="email"></span></h3>
+                            <h3><strong>Unique ID:</strong> <span id="uniqueID"></span></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+​
+    <script type="text/javascript">
+
+    function genTable(data){
+        console.log(data);
+        for(let i=0; i<data.length; i++){
+                    let newDiv = $("<div>");
+                    let newHname = $("<h2>");
+                    let newHphone = $("<h3>");
+                    let newHemail = $("<h3>")
+                    let newHid = $("<h3>")
+                      
+                     newHname.text(data[i].name);
+
+                    newHphone.text(data[i].phoneNumber);
+                    newHemail.text(data[i].email);
+                    newHid.text(data[i].id);
+                    $("#currentReservations").append(newDiv);
+                    newDiv.append(newHname, newHphone, newHemail, newHid);       
+                }
+    }
+
+    async function getData(){
+        $.ajax({ url: "/api/tables", method: "GET" }).then(data => {
+         
+            // console.log(data)
+            genTable(data);
+              
+                return data;
+               
+            })
+    }
+    async function fillpage() {
+             getData();
+                      
+           
+            
+           
+        }
+        fillpage();
+
+
+    </script>
+</body>
+​
+</html>
